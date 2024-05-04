@@ -31,3 +31,10 @@ body {
     text-wrap: balance;
   }
 }
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+.hover\:opacity-90:hover {
+  opacity: 0.9;
+}

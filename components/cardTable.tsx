@@ -68,48 +68,48 @@ export const CardTable = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto px-4 py-8">
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center min-h-screen">
           <div className="text-xl font-medium">Loading...</div>
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-6">
-          {nfts.map((nft) => {
-            return (
-              // eslint-disable-next-line react/jsx-key
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl">
+            {nfts.map((nft) => (
               <Link
+                key={nft.id}
+                href={`https://sepolia.etherscan.io/address/${contractAddress}`}
                 target="_blank"
-                href={`https://sepolia.etherscan.io/address/${contractAddress}`}>
-                <div
-                  key={nft.id}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="relative h-48 w-full">
-                    {nft.metadata.image ? (
-                      <Image
-                        src={resolveIPFS(nft.metadata.image)}
-                        alt={nft.metadata.name ?? "NFT"}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    ) : (
-                      <div>No image available</div>
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <h1 className="text-lg font-bold text-gray-900 shadow-sm">
-                      {nft.metadata.name}
-                    </h1>
-                    <p className="text-sm text-gray-700 shadow-sm">
-                      {nft.owner
-                        ? `Owner: ${walletFormat(nft.owner)}`
-                        : "Owner: None"}
-                    </p>
-                  </div>
+                className="block bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                <div className="relative h-48 w-full">
+                  {nft.metadata.image ? (
+                    <Image
+                      src={resolveIPFS(nft.metadata.image)}
+                      alt={nft.metadata.name ?? "NFT"}
+                      layout="fill"
+                      objectFit="cover"
+                      className="hover:opacity-90"
+                    />
+                  ) : (
+                    <div className="flex justify-center items-center h-full bg-gray-100 text-gray-500">
+                      No image available
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h1 className="text-lg font-bold text-gray-900">
+                    {nft.metadata.name}
+                  </h1>
+                  <p className="text-sm text-gray-700">
+                    {nft.owner
+                      ? `Owner: ${walletFormat(nft.owner)}`
+                      : "Owner: None"}
+                  </p>
                 </div>
               </Link>
-            );
-          })}
+            ))}
+          </div>
         </div>
       )}
     </div>
