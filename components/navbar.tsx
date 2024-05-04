@@ -12,7 +12,6 @@ export const Navbar = () => {
   const activeAccount = useActiveAccount();
 
   const { address } = activeAccount || {};
-  console.log("activeAccount", activeAccount);
 
   const handleConnect = async () => {
     connect(async () => {
@@ -33,13 +32,13 @@ export const Navbar = () => {
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-lg font-bold">Joseph Puffles Collection </h1>
-        <div>
+        {/* <div>
           {address ? (
             walletFormat(address)
           ) : (
             <button onClick={handleConnect}>Connect Wallet</button>
           )}
-        </div>
+        </div> */}
       </div>
     </nav>
   );

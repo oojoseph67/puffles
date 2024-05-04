@@ -8,7 +8,7 @@ import { client } from "./navbar";
 import { getNFTs } from "thirdweb/extensions/erc721";
 
 interface METADATA {
-  customImage: string;
+  // customImage: string;
   id: bigint;
   uri: string;
   name?: string;
@@ -51,10 +51,10 @@ export const CardTable = () => {
     });
     const formattedNFTs = allNFTs.map((nft) => ({
       ...nft,
-      id: Number(nft.id), // Convert bigint to number if safe to do so
+      id: Number(nft.id),
       metadata: {
         ...nft.metadata,
-        customImage: resolveIPFS(nft.metadata.customImage as string)
+        // customImage: nft.metadata.customImage,
       },
     }));
     setNfts(formattedNFTs);
@@ -79,12 +79,16 @@ export const CardTable = () => {
                 key={nft.id}
                 className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="relative h-48 w-full">
-                  <Image
-                    src={nft.metadata.customImage}
-                    alt={nft.metadata.name || "name"}
-                    layout="fill"
-                    objectFit="cover"
-                  />
+                  {nft.metadata.image ? (
+                    <Image
+                      src={resolveIPFS(nft.metadata.image)}
+                      alt={nft.metadata.name ?? "NFT"}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  ) : (
+                    <div>No image available</div>
+                  )}
                 </div>
                 <div className="p-4">
                   <h1 className="text-lg font-bold text-gray-900 shadow-sm">
@@ -103,9 +107,9 @@ export const CardTable = () => {
   );
 };
 
-const resolveIPFS = (url?: string) => {
-  if (!url) return '';
-  const ipfsPrefix = 'ipfs://';
+const resolveIPFS = (url: string) => {
+  if (!url) return "https://images.app.goo.gl/thQDD7YrpDdgnDTu8";
+  const ipfsPrefix = "ipfs://";
   if (url.startsWith(ipfsPrefix)) {
     return `https://ipfs.io/ipfs/${url.slice(ipfsPrefix.length)}`;
   }
