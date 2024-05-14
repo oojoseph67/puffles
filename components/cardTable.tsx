@@ -30,8 +30,9 @@ interface NFT {
   type: string;
 }
 
-export const chain = defineChain(11155111);
-export const contractAddress = "0xB69B8961a4fa3F7D01e7b24807a40C5bB6B69Cf5";
+export const chain = defineChain(97);
+// export const contractAddress = "0xC0d314ccE6073497B709b0dd1D699237478a1E0c";
+export const contractAddress = "0xE16C07D687A7Bf5e295D3C552edC927C28F25EE9";
 
 export const CardTable = () => {
   const [nfts, setNfts] = useState<NFT[]>([]);
@@ -39,7 +40,7 @@ export const CardTable = () => {
 
   const contract = getContract({
     client,
-    chain: defineChain(11155111),
+    chain,
     address: contractAddress,
   });
 
@@ -51,6 +52,7 @@ export const CardTable = () => {
       start: 0,
       count: 10,
     });
+    console.log({ allNFTs });
     const formattedNFTs = allNFTs.map((nft) => ({
       ...nft,
       id: Number(nft.id),
@@ -59,6 +61,7 @@ export const CardTable = () => {
         // customImage: nft.metadata.customImage,
       },
     }));
+    console.log({ formattedNFTs });
     setNfts(formattedNFTs);
     setLoading(false);
   }
@@ -76,7 +79,7 @@ export const CardTable = () => {
       ) : (
         <div className="flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl">
-            {nfts.map((nft) => (
+            {nfts.slice(1).map((nft) => (
               <Link
                 key={nft.id}
                 href={`https://sepolia.etherscan.io/address/${contractAddress}`}
